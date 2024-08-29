@@ -6,9 +6,9 @@ import limchaeyoung.dailySprout.auth.exception.CustomSecurityException;
 import limchaeyoung.dailySprout.auth.exception.CustomWebClientException;
 import limchaeyoung.dailySprout.common.response.StandardResponse;
 import limchaeyoung.dailySprout.habit.exception.CustomHabitException;
+import limchaeyoung.dailySprout.habitDay.exception.CustomHabitDayException;
 import limchaeyoung.dailySprout.user.exception.CustomUserException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -28,25 +28,32 @@ public class GlobalExceptionHandler {
     public ResponseEntity<StandardResponse<Void>> handleCustomUserException(CustomUserException e) {
         log.warn(e.getMessage(), e);
 
-        return ResponseEntity.badRequest().body(StandardResponse.failure(e.getCode(), e.getMessage()));
+        return ResponseEntity.status(e.getStatus()).body(StandardResponse.failure(e.getCode(), e.getMessage()));
     }
 
     @ExceptionHandler(CustomAchievementException.class)
     public ResponseEntity<StandardResponse<Void>> handleCustomAchievementException(CustomAchievementException e) {
         log.warn(e.getMessage(), e);
 
-        return ResponseEntity.badRequest().body(StandardResponse.failure(e.getCode(), e.getMessage()));
+        return ResponseEntity.status(e.getStatus()).body(StandardResponse.failure(e.getCode(), e.getMessage()));
     }
 
     @ExceptionHandler(CustomHabitException.class)
     public ResponseEntity<StandardResponse<Void>> handleCustomHabitException(CustomHabitException e) {
         log.warn(e.getMessage(), e);
 
-        return ResponseEntity.badRequest().body(StandardResponse.failure(e.getCode(), e.getMessage()));
+        return ResponseEntity.status(e.getStatus()).body(StandardResponse.failure(e.getCode(), e.getMessage()));
+    }
+
+    @ExceptionHandler(CustomHabitDayException.class)
+    public ResponseEntity<StandardResponse<Void>> handleCustomHabitDayException(CustomHabitDayException e) {
+        log.warn(e.getMessage(), e);
+        return ResponseEntity.status(e.getStatus()).body(StandardResponse.failure(e.getCode(), e.getMessage()));
     }
 
     @ExceptionHandler(CustomWebClientException.class)
     public ResponseEntity<StandardResponse<Void>> handleCustomWebClientException(CustomWebClientException e) {
+
         log.warn(e.getMessage(), e);
 
         return ResponseEntity.badRequest().body(StandardResponse.failure(e.getCode(), e.getStatusText()));
@@ -56,7 +63,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<StandardResponse<Void>> handleCustomSecurityException(CustomSecurityException e) {
         log.warn(e.getMessage(), e);
 
-        return ResponseEntity.badRequest().body(StandardResponse.failure(e.getErrorCode().getCode(), e.getErrorCode().getMessage()));
+        return ResponseEntity.status(e.getStatus()).body(StandardResponse.failure(e.getCode(), e.getMessage()));
     }
 
     // @Valid exception
@@ -66,7 +73,8 @@ public class GlobalExceptionHandler {
 
         String errorMessage = e.getBindingResult().getAllErrors().get(0).getDefaultMessage();
 
-        return ResponseEntity.badRequest().body(StandardResponse.failure(HttpStatus.BAD_REQUEST.value(), errorMessage));
+
+        return ResponseEntity.status(e.getStatusCode()).body(StandardResponse.failure(e.getStatusCode().value(), errorMessage));
     }
 
     @ExceptionHandler(Exception.class)

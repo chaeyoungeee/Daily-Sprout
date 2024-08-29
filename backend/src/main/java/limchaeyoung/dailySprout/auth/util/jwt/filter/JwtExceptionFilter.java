@@ -26,14 +26,13 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
 			filterChain.doFilter(request, response);
 		} catch (CustomSecurityException e) {
 			log.warn("CustomSecurityException", e);
-			ErrorCode errorCode = e.getErrorCode();
 			StandardResponse<Void> errorResponse = StandardResponse.failure(
-				errorCode.getCode(),
-				errorCode.getMessage()
+				e.getCode(),
+				e.getMessage()
 			);
 			HttpResponse.sendErrorResponse(
 				response,
-				errorCode.getHttpStatus(),
+				e.getStatus(),
 				errorResponse
 			);
 		} catch (Exception e) {

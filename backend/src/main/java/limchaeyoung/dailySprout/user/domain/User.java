@@ -1,9 +1,6 @@
 package limchaeyoung.dailySprout.user.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import limchaeyoung.dailySprout.common.domain.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -18,7 +15,11 @@ public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
+
+    @Column(nullable = false)
     private String email;
+
+    @Column(nullable = false)
     private String nickname;
 
     public static User createUser(String email, String nickname) {

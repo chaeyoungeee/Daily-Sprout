@@ -2,8 +2,12 @@ package limchaeyoung.dailySprout.habit.domain;
 
 import jakarta.persistence.*;
 import limchaeyoung.dailySprout.common.domain.BaseEntity;
+import limchaeyoung.dailySprout.habitDay.domain.HabitDay;
 import limchaeyoung.dailySprout.user.domain.User;
 import lombok.Getter;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -22,4 +26,7 @@ public class Habit extends BaseEntity {
 
     @Column(nullable = false)
     private String content;
+
+    @OneToMany(mappedBy = "habit")
+    private Set<HabitDay> habitDays = new HashSet<>();
 }

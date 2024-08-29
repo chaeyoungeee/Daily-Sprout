@@ -21,7 +21,9 @@ public enum ErrorCode {
     KAKAO_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR,  4022, "카카오 서버 에러로 인해 토큰 발급에 실패했습니다."),
     INTERNAL_AUTH_ERROR(HttpStatus.INTERNAL_SERVER_ERROR,  4031, "인증 처리 중 서버 에러가 발생했습니다."),
 
-    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, 5000, "서버 에러가 발생했습니다.");
+    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, 5000, "서버 에러가 발생했습니다."),
+
+    DAY_NOT_EXIST(HttpStatus.BAD_REQUEST, 6001, "존재하지 않는 요일입니다.");
 
     private final HttpStatus httpStatus;
     private final int code;

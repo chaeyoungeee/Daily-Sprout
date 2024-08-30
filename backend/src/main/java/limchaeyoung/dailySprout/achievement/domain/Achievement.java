@@ -3,10 +3,15 @@ package limchaeyoung.dailySprout.achievement.domain;
 import jakarta.persistence.*;
 import limchaeyoung.dailySprout.common.domain.BaseEntity;
 import limchaeyoung.dailySprout.habit.domain.Habit;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Entity
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 public class Achievement extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,7 +23,8 @@ public class Achievement extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private AchievementStatus status;
+    @Builder.Default
+    private AchievementStatus status = AchievementStatus.NOT_ACHIEVED;
 
     @Column(nullable = false, updatable = false)
     private LocalDate habitDate;

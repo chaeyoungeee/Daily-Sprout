@@ -4,13 +4,17 @@ import jakarta.persistence.*;
 import limchaeyoung.dailySprout.common.domain.BaseEntity;
 import limchaeyoung.dailySprout.habitDay.domain.HabitDay;
 import limchaeyoung.dailySprout.user.domain.User;
-import lombok.Getter;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
+@ToString
 public class Habit extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,11 +26,13 @@ public class Habit extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private HabitStatus status;
+    @Builder.Default
+    private HabitStatus status = HabitStatus.ACTIVE;
 
     @Column(nullable = false)
     private String content;
 
-    @OneToMany(mappedBy = "habit")
+    @OneToMany(mappedBy = "habit", cascade = CascadeType.ALL)
+    @Builder.Default
     private Set<HabitDay> habitDays = new HashSet<>();
 }

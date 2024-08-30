@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SwaggerConfig {
 
-    private static final String JWT_SECURITY_SCHEME = "JWT Token";
+    public static final String JWT_SECURITY_SCHEME = "JWT Token";
 
     @Bean
     public OpenAPI openAPI() {
@@ -43,10 +43,19 @@ public class SwaggerConfig {
     }
 
     @Bean
-    public GroupedOpenApi testApi() {
+    public GroupedOpenApi habitApi() {
         return GroupedOpenApi.builder()
-                .group("테스트")
-                .pathsToMatch("/test/**")
+                .group("습관")
+                .pathsToMatch("/habits/**")
                 .build();
     }
+
+
+//    @Bean
+//    public GroupedOpenApi testApi() {
+//        return GroupedOpenApi.builder()
+//                .group("테스트")
+//                .pathsToMatch("/test/**")
+//                .build();
+//    }
 }

@@ -8,8 +8,9 @@ import java.util.HashMap;
 import java.util.Map;
 import static limchaeyoung.dailySprout.common.exception.ErrorCode.DAY_NOT_EXIST;
 
+
 @RequiredArgsConstructor
-public enum Day {
+public enum DayWeek {
     MONDAY("월요일"),
     TUESDAY("화요일"),
     WEDNESDAY("수요일"),
@@ -19,11 +20,11 @@ public enum Day {
     SUNDAY("일요일");
 
     private final String name;
-    private static final Map<String, Day> NAME_TO_ENUM_MAP = new HashMap<>();
+    private static final Map<String, DayWeek> NAME_TO_ENUM_MAP = new HashMap<>();
 
     static {
-        for (Day day : Day.values()) {
-            NAME_TO_ENUM_MAP.put(day.name, day);
+        for (DayWeek dayWeek : DayWeek.values()) {
+            NAME_TO_ENUM_MAP.put(dayWeek.name, dayWeek);
         }
     }
 
@@ -31,10 +32,10 @@ public enum Day {
     public String getName() { return name; }
 
     @JsonCreator
-    public static Day fromName(String name) {
-        Day day = NAME_TO_ENUM_MAP.get(name);
-        if (day == null) throw new CustomHabitDayException(DAY_NOT_EXIST);
+    public static DayWeek fromName(String name) {
+        DayWeek dayWeek = NAME_TO_ENUM_MAP.get(name);
+        if (dayWeek == null) throw new CustomHabitDayException(DAY_NOT_EXIST);
 
-        return day;
+        return dayWeek;
     }
 }

@@ -12,6 +12,7 @@ import limchaeyoung.dailySprout.habitDay.domain.HabitDay;
 import limchaeyoung.dailySprout.habitDay.repository.HabitDayRepository;
 import limchaeyoung.dailySprout.user.application.UserService;
 import limchaeyoung.dailySprout.user.domain.User;
+import limchaeyoung.dailySprout.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,7 @@ public class HabitService {
     private final HabitRepository habitRepository;
     private final HabitDayRepository habitDayRepository;
     private final AchievementRepository achievementRepository;
+    private final UserRepository userRepository;
 
     private final UserService userService;
 
@@ -96,32 +98,4 @@ public class HabitService {
 
         return dates;
     }
-
-    // 주어진 달의 주어진 요일에 해당하는 날짜를 모두 찾아 반환하는 함수
-    public List<LocalDate> getDatesForDayOfWeekInMonth(int year, int month, DayWeek dayWeek) {
-        List<LocalDate> dates = new ArrayList<>();
-
-        // 해당 달의 초일/말일 찾음
-        YearMonth yearMonth = YearMonth.of(year, month);
-        LocalDate firstDayOfMonth = yearMonth.atDay(1);
-        LocalDate lastDayOfMonth = yearMonth.atEndOfMonth();
-
-        // 요일에 해당하는 첫번째 날짜 찾음
-        java.time.DayOfWeek dayOfWeek = java.time.DayOfWeek.valueOf(dayWeek.toString());
-        LocalDate currentDay = firstDayOfMonth.with(dayOfWeek);
-
-        // 첫번째 날짜가 해당 달이 아니라면 일주일 더함
-        if (currentDay.isBefore(firstDayOfMonth)) {
-            currentDay = currentDay.plusWeeks(1);
-        }
-
-        // 해당 달의 요일에 해당하는 모든 날짜 추가함
-        while (!currentDay.isAfter(lastDayOfMonth)) {
-            dates.add(currentDay);
-            currentDay = currentDay.plusWeeks(1);
-        }
-
-        return dates;
-    }
-
 }

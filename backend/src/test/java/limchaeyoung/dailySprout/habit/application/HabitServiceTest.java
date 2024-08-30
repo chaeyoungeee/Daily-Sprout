@@ -1,6 +1,7 @@
 package limchaeyoung.dailySprout.habit.application;
 
 import jakarta.transaction.Transactional;
+import limchaeyoung.dailySprout.achievement.repository.AchievementRepository;
 import limchaeyoung.dailySprout.habit.domain.Habit;
 import limchaeyoung.dailySprout.habit.dto.CreateHabitRequest;
 import limchaeyoung.dailySprout.habit.repository.HabitRepository;
@@ -12,7 +13,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 
 import java.util.Set;
 
@@ -28,18 +28,17 @@ class HabitServiceTest {
 
     @Autowired
     UserRepository userRepository;
-
     @Autowired
     HabitService habitService;
-
     @Autowired
     HabitRepository habitRepository;
+    @Autowired
+    AchievementRepository achievementRepository;
 
     @Nested
     @DisplayName("습관 생성 테스트")
     class createHabitTest {
         @Test
-        @Rollback(false)
         void 습관_생성_성공() {
         	// given
             User user1 = User.builder()

@@ -13,6 +13,7 @@ import limchaeyoung.dailySprout.auth.dto.LoginInfo;
 import limchaeyoung.dailySprout.auth.dto.LoginResponse;
 import limchaeyoung.dailySprout.auth.dto.TokenResponse;
 import limchaeyoung.dailySprout.common.response.StandardResponse;
+import limchaeyoung.dailySprout.config.SwaggerConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -60,7 +61,7 @@ public class LoginController {
     )
     @Operation(summary = "유저 정보 조회",
             description = "유저 정보 조회 API입니다.",
-            security = @SecurityRequirement(name = "JWT Token")  // 이 엔드포인트에만 JWT 인증 요구
+            security = @SecurityRequirement(name = SwaggerConfig.JWT_SECURITY_SCHEME)  // 이 엔드포인트에만 JWT 인증 요구
     )
     public StandardResponse<LoginInfo> getLoginInfo(@AuthenticationPrincipal CustomUserDetails user) {
 //        CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

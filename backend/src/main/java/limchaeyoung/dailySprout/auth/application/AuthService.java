@@ -46,7 +46,10 @@ public class AuthService {
     }
 
     private User createNewKakaoUser(final Profile profile, final String email) {
-        final User newUser = User.createUser(email, profile.getNickname());
+        final User newUser = User.builder()
+                .email(email)
+                .nickname(profile.nickname)
+                .build();
         return userRepository.save(newUser);
     }
 

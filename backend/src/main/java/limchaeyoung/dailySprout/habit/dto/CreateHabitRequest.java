@@ -7,10 +7,10 @@ import limchaeyoung.dailySprout.habitDay.domain.DayWeek;
 
 import java.util.Set;
 
-@Schema(description = "습관 추가 요청")
-public record CreateHabitRequest(@NotBlank(message = "추가할 습관을 입력해주세요.")
-                              @Schema(description = "추가할 습관", example = "물 마시기")
+@Schema(description = "습관 생성 요청")
+public record CreateHabitRequest(@NotBlank(message = "생성할 습관을 입력해주세요.")
+                              @Schema(description = "생성할 습관", example = "물 마시기")
                               String content,
-                                 @NotEmpty(message = "추가할 요일을 선택해주세요.")
-                              @Schema(description = "추가할 요일", example = "[\"월요일\", \"화요일\"]")
+                                 @NotEmpty(message = "생성할 요일을 선택해주세요.")
+                              @Schema(description = "생성할 요일", example = "[\"월요일\", \"화요일\"]")
                               Set<DayWeek> dayWeeks) { }

@@ -24,12 +24,12 @@ public class HabitController {
     private final HabitService habitService;
 
     @PostMapping
-    @Operation(summary = "습관 추가",
-            description = "습관 추가 API입니다.",
+    @Operation(summary = "습관 생성",
+            description = "습관 생성 API입니다.",
             security = @SecurityRequirement(name = SwaggerConfig.JWT_SECURITY_SCHEME))
     public StandardResponse<String> createHabit(@RequestBody @Valid CreateHabitRequest createHabitRequest, @AuthenticationPrincipal CustomUserDetails user) {
         habitService.createHabit(createHabitRequest, user.getEmail());
 
-        return StandardResponse.success("습관 추가에 성공하였습니다.");
+        return StandardResponse.success("습관 생성에 성공하였습니다.");
     }
 }

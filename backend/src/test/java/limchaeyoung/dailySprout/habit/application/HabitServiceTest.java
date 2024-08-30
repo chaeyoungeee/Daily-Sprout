@@ -36,11 +36,11 @@ class HabitServiceTest {
     HabitRepository habitRepository;
 
     @Nested
-    @DisplayName("습관 생성 테스트")
+    @DisplayName("습관 추가 테스트")
     class createHabitTest {
         @Test
         @Rollback(false)
-        void 습관_생성_성공() {
+        void 습관_추가_성공() {
         	// given
             User user1 = User.builder()
                     .email("test@test.ac.kr")

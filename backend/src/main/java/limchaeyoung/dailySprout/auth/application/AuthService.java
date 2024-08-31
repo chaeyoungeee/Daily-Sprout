@@ -2,7 +2,7 @@ package limchaeyoung.dailySprout.auth.application;
 
 import limchaeyoung.dailySprout.user.domain.User;
 import limchaeyoung.dailySprout.auth.dto.KakaoUserInfoResponse;
-import limchaeyoung.dailySprout.auth.dto.LoginInfo;
+import limchaeyoung.dailySprout.auth.dto.LoginInfoResponse;
 import limchaeyoung.dailySprout.auth.dto.LoginResponse;
 import limchaeyoung.dailySprout.auth.dto.TokenResponse;
 import limchaeyoung.dailySprout.auth.util.jwt.JwtProvider;
@@ -54,10 +54,10 @@ public class AuthService {
     }
 
     @Transactional(readOnly = true)
-    public LoginInfo getLoginInfo(final String email) {
+    public LoginInfoResponse getLoginInfo(final String email) {
         User user = userService.findByEmail(email);
 
-        return new LoginInfo(
+        return new LoginInfoResponse(
                 user.getEmail(),
                 user.getNickname()
         );

@@ -1,6 +1,6 @@
 package limchaeyoung.dailySprout.auth.dto;
 
-public record LoginInfo(
+public record LoginInfoResponse(
         String email,
         String nickname
 ) {

@@ -9,7 +9,7 @@ import jakarta.validation.Valid;
 import limchaeyoung.dailySprout.auth.application.AuthService;
 import limchaeyoung.dailySprout.auth.domain.CustomUserDetails;
 import limchaeyoung.dailySprout.auth.dto.KakaoLoginRequest;
-import limchaeyoung.dailySprout.auth.dto.LoginInfo;
+import limchaeyoung.dailySprout.auth.dto.LoginInfoResponse;
 import limchaeyoung.dailySprout.auth.dto.LoginResponse;
 import limchaeyoung.dailySprout.auth.dto.TokenResponse;
 import limchaeyoung.dailySprout.common.response.StandardResponse;
@@ -63,10 +63,10 @@ public class LoginController {
             description = "유저 정보 조회 API입니다.",
             security = @SecurityRequirement(name = SwaggerConfig.JWT_SECURITY_SCHEME)  // 이 엔드포인트에만 JWT 인증 요구
     )
-    public StandardResponse<LoginInfo> getLoginInfo(@AuthenticationPrincipal CustomUserDetails user) {
+    public StandardResponse<LoginInfoResponse> getLoginInfo(@AuthenticationPrincipal CustomUserDetails user) {
 //        CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        LoginInfo response = authService.getLoginInfo(user.getEmail());
+        LoginInfoResponse response = authService.getLoginInfo(user.getEmail());
 
         return StandardResponse.success(response);
     }

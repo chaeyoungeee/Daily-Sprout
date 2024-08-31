@@ -14,7 +14,6 @@ import java.util.Set;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-@ToString
 public class Habit extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,4 +34,8 @@ public class Habit extends BaseEntity {
     @OneToMany(mappedBy = "habit", cascade = CascadeType.ALL)
     @Builder.Default
     private Set<HabitDay> habitDays = new HashSet<>();
+
+    public void deactivate() {
+        this.status = HabitStatus.INACTIVE;
+    }
 }

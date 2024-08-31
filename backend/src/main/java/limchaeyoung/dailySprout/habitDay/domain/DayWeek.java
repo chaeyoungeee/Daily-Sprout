@@ -2,11 +2,13 @@ package limchaeyoung.dailySprout.habitDay.domain;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import limchaeyoung.dailySprout.common.exception.ErrorCode;
 import limchaeyoung.dailySprout.habitDay.exception.CustomHabitDayException;
 import lombok.RequiredArgsConstructor;
 import java.util.HashMap;
 import java.util.Map;
-import static limchaeyoung.dailySprout.common.exception.ErrorCode.DAY_NOT_EXIST;
+
+import static limchaeyoung.dailySprout.common.exception.ErrorCode.DAY_NOT_FOUND;
 
 
 @RequiredArgsConstructor
@@ -34,7 +36,7 @@ public enum DayWeek {
     @JsonCreator
     public static DayWeek fromName(String name) {
         DayWeek dayWeek = NAME_TO_ENUM_MAP.get(name);
-        if (dayWeek == null) throw new CustomHabitDayException(DAY_NOT_EXIST);
+        if (dayWeek == null) throw new CustomHabitDayException(DAY_NOT_FOUND);
 
         return dayWeek;
     }

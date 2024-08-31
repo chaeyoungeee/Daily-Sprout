@@ -23,7 +23,9 @@ public enum ErrorCode {
 
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, 5000, "서버 에러가 발생했습니다."),
 
-    DAY_NOT_EXIST(HttpStatus.BAD_REQUEST, 6001, "존재하지 않는 요일입니다.");
+    DAY_NOT_FOUND(HttpStatus.BAD_REQUEST, 6001, "요일이 존재하지 않습니다."),
+
+    HABIT_NOT_FOUND(HttpStatus.BAD_REQUEST, 7001, "습관이 존재하지 않습니다.");
 
     private final HttpStatus httpStatus;
     private final int code;

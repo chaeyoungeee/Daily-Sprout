@@ -12,5 +12,5 @@ import java.util.List;
 @Repository
 public interface AchievementRepository extends JpaRepository<Achievement, Long> {
     @Query("SELECT a FROM Achievement a WHERE a.habit = :habit AND FUNCTION('YEAR', a.habitDate) = :year AND FUNCTION('MONTH', a.habitDate) = :month")
-    List<Achievement> findAllByHabitAndHabitDateYearAndHabitDateMonth(Habit habit, @Param("year") int year, @Param("month") int month);
+    List<Achievement> findAllByHabitAndHabitDateYearAndHabitDateMonth(@Param("habit") Habit habit, @Param("year") int year, @Param("month") int month);
 }

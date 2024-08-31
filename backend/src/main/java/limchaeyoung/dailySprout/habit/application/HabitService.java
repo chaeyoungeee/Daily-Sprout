@@ -4,7 +4,10 @@ import jakarta.transaction.Transactional;
 import limchaeyoung.dailySprout.achievement.domain.Achievement;
 import limchaeyoung.dailySprout.achievement.repository.AchievementRepository;
 import limchaeyoung.dailySprout.habit.domain.Habit;
+import limchaeyoung.dailySprout.habit.domain.HabitStatus;
 import limchaeyoung.dailySprout.habit.dto.CreateHabitRequest;
+import limchaeyoung.dailySprout.habit.dto.HabitInfoResponse;
+import limchaeyoung.dailySprout.habit.exception.CustomHabitException;
 import limchaeyoung.dailySprout.habit.mapper.HabitMapper;
 import limchaeyoung.dailySprout.habit.repository.HabitRepository;
 import limchaeyoung.dailySprout.habitDay.domain.DayWeek;
@@ -23,6 +26,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static limchaeyoung.dailySprout.common.exception.ErrorCode.*;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -37,6 +42,20 @@ public class HabitService {
 
     private final HabitMapper habitMapper;
 
+    public List<HabitInfoResponse> findAllByUserAndStatus(String email) {
+        User user = userService.findByEmail(email);
+        List<Habit> habits = habitRepository.findAllByUserAndStatus(user, HabitStatus.ACTIVE);
+
+        return habits.stream().map(habitMapper::toHabitInfoResponse).toList();
+    }
+
+    public void deactivateHabit(Long habitId, String email) {
+        User user = userService.findByEmail(email);
+        Habit habit = habitRepository.findByHabitIdAndUser(habitId, user).orElseThrow(() -> new CustomHabitException(HABIT_NOT_FOUND));
+
+        habit.deactivate();
+    }
+
 
     public Habit createHabit(CreateHabitRequest createHabitRequest, String email) {
         User user = userService.findByEmail(email);
@@ -49,9 +68,9 @@ public class HabitService {
 
         createHabitRequest.dayWeeks().forEach((day) -> {
             HabitDay habitDay = HabitDay.builder()
-                                        .habit(habit)
-                                        .dayWeek(day)
-                                        .build();
+                    .habit(habit)
+                    .dayWeek(day)
+                    .build();
             habit.getHabitDays().add(habitDay);
 
             List<LocalDate> dates = getDatesForDayOfWeekInMonth(day);
@@ -99,3 +118,5 @@ public class HabitService {
         return dates;
     }
 }
+
+

@@ -7,7 +7,7 @@ import limchaeyoung.dailySprout.habitDay.domain.DayWeek;
 
 import java.util.Set;
 
-@Schema(description = "습관 생성 요청")
+@Schema(description = "습관 생성 요청 DTO")
 public record CreateHabitRequest(@NotBlank(message = "생성할 습관을 입력해주세요.")
                               @Schema(description = "생성할 습관", example = "물 마시기")
                               String content,

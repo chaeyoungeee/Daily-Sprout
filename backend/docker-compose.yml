@@ -1,0 +1,36 @@
+services:
+  db:
+    container_name: daily-sprout-db
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_DATABASE: daily-sprout
+      MYSQL_ROOT_PASSWORD: COMPOSE_ROOT_PASSWORD
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'pwd'
+    ports:
+      - "3303:3306"
+    volumes:
+      - "mysql-daily-sprout:/var/lib/mysql"
+
+  redis:
+    container_name: daily-sprout-redis
+    image: redis:latest
+    ports:
+      - "6379:6379"
+
+  spring-boot-app:
+    container_name: daily-sprout-app
+    image: app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+      - redis
+
+volumes:
+  mysql-daily-sprout:
+    driver: local

@@ -1,0 +1,14 @@
+dependencies {
+
+    implementation project(':module-core')
+
+    // spring batch
+    implementation 'org.springframework.boot:spring-boot-starter-batch'
+}
+
+bootJar {
+    enabled = true
+}
+jar {
+    enabled = false
+}

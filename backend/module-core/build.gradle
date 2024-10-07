@@ -1,0 +1,16 @@
+bootJar {
+    enabled = false
+}
+jar {
+    enabled = true
+}
+
+dependencies {
+    implementation project(':module-common')
+
+    // webflux
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+    // mysql
+    runtimeOnly 'com.mysql:mysql-connector-j'
+}

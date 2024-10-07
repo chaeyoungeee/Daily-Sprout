@@ -1,1 +1,6 @@
-rootProject.name = 'daily-sprout'
+rootProject.name = 'Daily-Sprout'
+include 'module-api'
+include 'module-core'
+include 'module-common'
+include 'module-batch'
+

@@ -1,0 +1,7 @@
+spring:
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      cache:
+        ttl: 86400000 # 60*60*24*1000 (1일)

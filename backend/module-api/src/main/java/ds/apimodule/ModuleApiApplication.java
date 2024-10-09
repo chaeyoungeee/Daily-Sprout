@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@SpringBootApplication(scanBasePackages = "ds")
+@SpringBootApplication(scanBasePackages = {"ds.coremodule", "ds.commonmodule", "ds.apimodule"})
 @EnableJpaAuditing
 @EntityScan(basePackages = "ds.coremodule")
 @EnableJpaRepositories(basePackages = "ds.coremodule")

@@ -1,0 +1,27 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        highlight_sql: true
+        use_sql_comments: true
+
+  main:
+    allow-bean-definition-overriding: true
+
+security:
+  jwt:
+    secret: 26c04a288de5735d972e45b480806b329de279724c06d68b3f2cb3461043655663f36e6375433011c68b310c0ae6633ca6643b8ba2e73c5db4f1426d3ad1a1bc # openssl rand -hex 64
+    token:
+      access-expiration-time: 864000000
+      refresh-expiration-time: 864000000
+
+logging:
+  level:
+    org:
+      hibernate.sql: debug
+      springframework.jdbc.core.JdbcTemplate: debug
+      springframework.jdbc.sql: trace

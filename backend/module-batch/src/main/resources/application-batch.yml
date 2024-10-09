@@ -1,0 +1,8 @@
+spring:
+  batch:
+    chunk_size: 1000
+    pool_size: 5
+    job:
+      enabled: false # 서버 재시작시 배치 자동실행 방지
+    jdbc:
+      initialize-schema: always

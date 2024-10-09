@@ -1,0 +1,5 @@
+oauth:
+  kakao:
+    client-id: f31a90469c014cc2ad4ae6dd0d176014
+    token-url: "https://kauth.kakao.com"
+    user-info-url: "https://kapi.kakao.com"

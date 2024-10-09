@@ -1,0 +1,17 @@
+spring:
+  profiles:
+    active: local
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+    import: application-local.yml, application-redis.yml, application-oauth.yml, application-mysql.yml
+
+#---
+#spring:
+#  config:
+#    activate:
+#      on-profile: prod
+#    import: application-prod.yml, application-redis.yml, application-oauth.yml

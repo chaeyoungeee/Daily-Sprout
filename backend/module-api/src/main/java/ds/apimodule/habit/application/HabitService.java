@@ -20,6 +20,8 @@ import ds.coremodule.habit.domain.HabitStatus;
 import ds.coremodule.habit.exception.CustomHabitException;
 import ds.coremodule.habit.repository.HabitRepository;
 import ds.coremodule.habitDay.domain.DayWeek;
+import ds.coremodule.habitDay.domain.HabitDay;
+import ds.coremodule.habitDay.repository.HabitDayRepository;
 import ds.coremodule.user.domain.User;
 import jakarta.transaction.Transactional;
 
@@ -37,6 +39,7 @@ public class HabitService {
     private final UserService userService;
 
     private final HabitMapper habitMapper;
+    private final HabitDayRepository habitDayRepository;
 
     public List<HabitInfoResponse> findAllByUserAndStatus(String email) {
         User user = userService.findByEmail(email);
@@ -59,7 +62,17 @@ public class HabitService {
 
         // 습관 저장
         Habit habit = habitMapper.toEntity(createHabitRequest, user);
+
+        createHabitRequest.dayWeeks().forEach(dayWeek -> {
+            HabitDay habitDay = HabitDay.builder()
+                    .habit(habit)
+                    .dayWeek(dayWeek)
+                    .build();
+            habit.addHabitDay(habitDay);
+        });
+
         habitRepository.save(habit);
+
 
         DayOfWeek dayOfWeek = LocalDate.now().getDayOfWeek();
 

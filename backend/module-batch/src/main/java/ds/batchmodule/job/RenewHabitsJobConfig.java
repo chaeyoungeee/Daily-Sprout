@@ -100,12 +100,16 @@ public class RenewHabitsJobConfig {
         LocalDate date = LocalDateTime.parse(time).toLocalDate();
         DayOfWeek dayOfWeek = date.getDayOfWeek();
 
+        // String sql = "SELECT h.habit_id, hd.day_week " +
+        //     "FROM habit h " +
+        //     "INNER JOIN habit_day hd ON h.habit_id = hd.habit_id " +
+        //     "WHERE h.status = 'ACTIVE' AND " +
+        //     "hd.day_week = '" + dayOfWeek.toString() + "'";
+
         String sql = "SELECT h.habit_id, hd.day_week " +
             "FROM habit h " +
             "INNER JOIN habit_day hd ON h.habit_id = hd.habit_id " +
-            "WHERE h.status = 'ACTIVE' AND " +
-            "hd.day_week = '" + dayOfWeek.toString() + "'";
-
+            "WHERE h.status = 'ACTIVE'";
 
         JdbcCursorItemReader<ActiveHabitsVO> itemReader = new JdbcCursorItemReaderBuilder<ActiveHabitsVO>()
             .name(READER_NAME)
@@ -125,7 +129,33 @@ public class RenewHabitsJobConfig {
     @StepScope
     public ItemProcessor<ActiveHabitsVO, AchievementHabitsVO> activeHabitsProcessor(@Value("#{jobParameters['time']}") String time) {
         return activeHabitsVO -> {
+
             LocalDate date = LocalDateTime.parse(time).toLocalDate();
+
+            switch (activeHabitsVO.dayWeek()) {
+                case "MONDAY":
+                    date = date.with(DayOfWeek.MONDAY);
+                    break;
+                case "TUESDAY":
+                    date = date.with(DayOfWeek.TUESDAY);
+                    break;
+                case "WEDNESDAY":
+                    date = date.with(DayOfWeek.WEDNESDAY);
+                    break;
+                case "THURSDAY":
+                    date = date.with(DayOfWeek.THURSDAY);
+                    break;
+                case "FRIDAY":
+                    date = date.with(DayOfWeek.FRIDAY);
+                    break;
+                case "SATURDAY":
+                    date = date.with(DayOfWeek.SATURDAY);
+                    break;
+                case "SUNDAY":
+                    date = date.with(DayOfWeek.SUNDAY);
+                    break;
+            }
+
             return new AchievementHabitsVO(activeHabitsVO.habitId(), date);
         };
     }
@@ -133,10 +163,12 @@ public class RenewHabitsJobConfig {
     @Bean
     @StepScope
     public JdbcBatchItemWriter<AchievementHabitsVO> renewHabitsWriter() {
+        String sql = "INSERT INTO achievement (habit_id, habit_date, created_at, updated_at, status) " +
+            "VALUES (:habitId, :habitDate, now(), now(), 'NOT_ACHIEVED')";
+
         return new JdbcBatchItemWriterBuilder<AchievementHabitsVO>()
             .dataSource(dataSource)
-            .sql("INSERT INTO achievement (habit_id, habit_date, created_at, updated_at, status) " +
-                "VALUES (:habitId, :habitDate, now(), now(), 'NOT_ACHIEVED')")
+            .sql(sql)
             .beanMapped()
             .build();
     }
